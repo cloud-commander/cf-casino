@@ -1,0 +1,124 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cf-casino-backend",
+  "main": "src/backend/worker.ts",
+  "compatibility_date": "2024-04-05",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Secrets (Should be set via 'wrangler secret put' but listed here for documentation)
+  "vars": {
+    "ENVIRONMENT": "development",
+    "VERSION": "1.0.0-rc1",
+    "CF_ACCOUNT_ID": "<YOUR_ACCOUNT_ID>"
+  },
+
+  "kv_namespaces": [
+    {
+      "binding": "GAME_LOBBY",
+      "id": "cf-casino-lobby-dev",
+      "preview_id": "cf-casino-lobby-preview"
+    },
+    {
+      "binding": "GOVERNOR_KV",
+      "id": "cf-casino-governor-dev",
+      "preview_id": "cf-casino-governor-preview"
+    }
+  ],
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cf-casino-db-at-dev",
+      "database_id": "<YOUR_DEV_DATABASE_ID>",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  "durable_objects": {
+    "bindings": [
+      { "name": "BETTING_LEDGER", "class_name": "BettingLedger" },
+      { "name": "GLOBAL_GOVERNOR", "class_name": "GlobalGovernor" },
+      { "name": "ROULETTE_TABLE", "class_name": "RouletteTable" },
+      { "name": "LATENCY_COMPARATOR", "class_name": "LatencyComparator" }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "BettingLedger",
+        "GlobalGovernor",
+        "RouletteTable",
+        "LatencyComparator"
+      ]
+    }
+  ],
+
+  "queues": {
+    "producers": [
+      { "binding": "AUDIT_QUEUE", "queue": "cf-casino-audit-queue-dev" }
+    ],
+    "consumers": [
+      {
+        "queue": "cf-casino-audit-queue-dev",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 3,
+        "dead_letter_queue": "cf-casino-audit-dlq-dev"
+      }
+    ]
+  },
+
+  "analytics_engine_datasets": [
+    { "binding": "METRICS", "dataset": "CF_CASINO_METRICS_DEV" }
+  ],
+
+  // ==========================================
+  // PRODUCTION ENVIRONMENT STAGE
+  // Usage: npm run deploy -- --env production
+  // ==========================================
+  "env": {
+    "production": {
+      "workers_dev": false,
+      "routes": [
+        { "pattern": "api.casino.cfdemo.link", "custom_domain": true }
+      ],
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "kv_namespaces": [
+        { "binding": "GAME_LOBBY", "id": "cf-casino-lobby-prod" },
+        { "binding": "GOVERNOR_KV", "id": "cf-casino-governor-prod" }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "cf-casino-db-at-prod",
+          "database_id": "<YOUR_PROD_DATABASE_ID>"
+        }
+      ],
+      "queues": {
+        "producers": [
+          { "binding": "AUDIT_QUEUE", "queue": "cf-casino-audit-queue-prod" }
+        ],
+        "consumers": [
+          {
+            "queue": "cf-casino-audit-queue-prod",
+            "max_batch_size": 20, // Higher batch size for prod throughput
+            "max_batch_timeout": 10,
+            "max_retries": 3,
+            "dead_letter_queue": "cf-casino-audit-dlq-prod"
+          }
+        ]
+      },
+      "analytics_engine_datasets": [
+        { "binding": "METRICS", "dataset": "CF_CASINO_METRICS_PROD" }
+      ]
+    }
+  },
+
+  "triggers": {
+    "crons": ["0 3 * * *"] // Daily sweep at 3 AM
+  }
+}

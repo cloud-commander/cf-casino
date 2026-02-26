@@ -1,0 +1,87 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/engine/RouletteTable.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/governor/GlobalGovernor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/api/audio.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 16[2mms[22m[39m
+[90mstdout[2m | src/backend/engine/BettingLedger.test.ts[2m > [22m[2mBettingLedger (Durable Object)[2m > [22m[2mPOST /authorize[2m > [22m[2mshould succeed idempotently if client retries exact same requestId
+[22m[39m{"level":"DEBUG","traceId":"92f5053f-289d-43cf-a522-1290364ed191","message":"Idempotent retry detected on authorize","environment":"test","version":"1.0.0","timestamp":"2026-02-26T12:54:16.208Z","holdId":"req_retry"}
+
+[90mstdout[2m | src/backend/engine/BettingLedger.test.ts[2m > [22m[2mBettingLedger (Durable Object)[2m > [22m[2malarm()[2m > [22m[2mshould rollback expired hold and restore balance
+[22m[39m{"level":"INFO","traceId":"af92ec15-7c1a-44c8-81ce-643c335f70c6","message":"Rolled back expired hold expired_hold. Restored 1000 cents.","environment":"test","version":"1.0.0","timestamp":"2026-02-26T12:54:16.212Z","subsystem":"Ledger","holdId":"expired_hold"}
+
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/api/betting.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/engine/BettingLedger.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/auth/login.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/middleware/auth.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+[90mstdout[2m | src/backend/worker.test.ts[2m > [22m[2mWorker Entry Point[2m > [22m[2mshould handle scheduled pruning
+[22m[39m{"level":"INFO","traceId":"175bf875-3d66-4c36-87d4-86c2a142d17d","message":"Starting scheduled pruning...","environment":"test","version":"1.0.0","timestamp":"2026-02-26T12:54:16.272Z","subsystem":"Maintenance"}
+
+[90mstdout[2m | src/backend/worker.test.ts[2m > [22m[2mWorker Entry Point[2m > [22m[2mshould handle scheduled pruning
+[22m[39m{"level":"INFO","traceId":"175bf875-3d66-4c36-87d4-86c2a142d17d","message":"Pruning complete.","environment":"test","version":"1.0.0","timestamp":"2026-02-26T12:54:16.274Z","subsystem":"Maintenance"}
+
+[90mstdout[2m | src/backend/compliance/consumer.test.ts[2m > [22m[2mCompliance Queue Consumer[2m > [22m[2mshould successfully insert a batch of logs into D1
+[22m[39m{"level":"INFO","traceId":"5a371c72-87b1-46ff-ae74-a6a62c570a4e","message":"Successfully committed batch of 1 logs to D1.","environment":"test","timestamp":"2026-02-26T12:54:16.285Z","subsystem":"Compliance","count":1}
+
+ [31m❯[39m [30m[42m backend (edge logic) [49m[39m src/backend/worker.test.ts [2m([22m[2m13 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 41[2mms[22m[39m
+     [32m✓[39m should return 204 for OPTIONS preflight[32m 17[2mms[22m[39m
+     [32m✓[39m should return 200 for /health[32m 1[2mms[22m[39m
+     [32m✓[39m should route to login[32m 4[2mms[22m[39m
+[31m     [31m×[31m should return 503 when global governor is in lockdown (Quota Exhausted)[39m[32m 5[2mms[22m[39m
+     [32m✓[39m should return 401 for protected routes without JWT[32m 1[2mms[22m[39m
+     [32m✓[39m should route to betting authorize with JWT and full body[32m 4[2mms[22m[39m
+     [32m✓[39m should route to betting confirm with JWT and full body[32m 2[2mms[22m[39m
+     [32m✓[39m should route to roulette websocket with JWT[32m 1[2mms[22m[39m
+     [32m✓[39m should route to audio token with JWT[32m 1[2mms[22m[39m
+     [32m✓[39m should route to latency bench with JWT[32m 1[2mms[22m[39m
+     [32m✓[39m should route to user profile with JWT[32m 1[2mms[22m[39m
+     [32m✓[39m should handle scheduled pruning[32m 2[2mms[22m[39m
+     [32m✓[39m should handle queue processing[32m 0[2mms[22m[39m
+[90mstderr[2m | src/backend/compliance/consumer.test.ts[2m > [22m[2mCompliance Queue Consumer[2m > [22m[2mshould route to dead letter logs on D1 failure
+[22m[39m{"level":"ERROR","traceId":"f06eb94f-15c6-4c58-8090-7d2214553f31","message":"Batch write failed. Routing to Dead Letter Queue...","environment":"test","timestamp":"2026-02-26T12:54:16.288Z","subsystem":"Compliance","error_message":"D1 Error","stack":"Error: D1 Error\n    at /Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/src/backend/compliance/consumer.test.ts:50:40\n    at file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:145:11\n    at file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:915:26\n    at file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:1243:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:1209:10)\n    at file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:1653:37\n    at Traces.$ (file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/vitest/dist/chunks/traces.CCmnQaNT.js:142:27)\n    at trace (file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)\n    at runTest (file:///Users/georgediavatis/Storage/Web-Development/cloudflare/cf-casino/node_modules/@vitest/runner/dist/index.js:1653:12)"}
+
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/utils/logger.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/compliance/consumer.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/engine/LatencyComparator.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 173[2mms[22m[39m
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/maintenance/pruning.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+[90mstderr[2m | src/backend/auth/jwt.test.ts[2m > [22m[2mJWT Service[2m > [22m[2mshould return null for malformed payload (Advisory A-4)
+[22m[39m[JWT] Payload validation failed: [
+  {
+    expected: [32m'string'[39m,
+    code: [32m'invalid_type'[39m,
+    path: [ [32m'sessionId'[39m ],
+    message: [32m'Invalid input: expected string, received undefined'[39m
+  }
+]
+
+ [32m✓[39m [30m[42m backend (edge logic) [49m[39m src/backend/auth/jwt.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[46m shared (pure logic) [49m[39m src/shared/types.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[42m backend (edge logic) [49m[39m src/backend/worker.test.ts[2m > [22mWorker Entry Point[2m > [22mshould return 503 when global governor is in lockdown (Quota Exhausted)
+[31m[1mAssertionError[22m: expected 200 to be 503 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 503[39m
+[31m+ 200[39m
+
+[36m [2m❯[22m src/backend/worker.test.ts:[2m94:24[22m[39m
+    [90m 92| [39m    [35mconst[39m req [33m=[39m [35mnew[39m [33mRequest[39m([32m"http://api/health"[39m)[33m;[39m
+    [90m 93| [39m    [35mconst[39m res [33m=[39m [35mawait[39m worker[33m.[39m[34mfetch[39m(req[33m,[39m mockEnv [35mas[39m [33mEnv[39m[33m,[39m mockCtx)[33m;[39m
+    [90m 94| [39m    [34mexpect[39m(res[33m.[39mstatus)[33m.[39m[34mtoBe[39m([34m503[39m)[33m;[39m
+    [90m   | [39m                       [31m^[39m
+    [90m 95| [39m    [35mconst[39m data [33m=[39m ([35mawait[39m res[33m.[39m[34mjson[39m()) [35mas[39m any[33m;[39m
+    [90m 96| [39m    [34mexpect[39m(data[33m.[39merror[33m.[39mcode)[33m.[39m[34mtoBe[39m([32m"QUOTA_EXHAUSTED"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m13 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m63 passed[39m[22m[90m (64)[39m
+[2m   Start at [22m 12:54:15
+[2m   Duration [22m 473ms[2m (transform 598ms, setup 0ms, import 1.07s, tests 397ms, environment 1ms)[22m
+

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://edge-casino.com/sitemap.xml
