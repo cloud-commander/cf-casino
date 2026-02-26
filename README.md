@@ -8,7 +8,7 @@ A high-performance, atomic, and compliant betting engine built entirely on Cloud
 
 ---
 
-## 🎰 The Premise: Why "iGaming Edge"?
+## The Premise: Why "iGaming Edge"?
 
 Traditional iGaming platforms suffer from three major bottlenecks:
 
@@ -25,7 +25,7 @@ Traditional iGaming platforms suffer from three major bottlenecks:
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -42,7 +42,7 @@ graph TD
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 ### Backend (Edge Runtime)
 
@@ -61,7 +61,7 @@ graph TD
 
 ---
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### 1. Prerequisites
 
@@ -80,7 +80,7 @@ cd frontend && npm install && cd ..
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Local Development
 
@@ -160,13 +160,13 @@ The frontend is a Vite application. You can deploy it to **Cloudflare Pages** di
 
 #### 6. Service Specific Setup
 
-**🧩 Bot Protection (Cloudflare Turnstile)**
+** Bot Protection (Cloudflare Turnstile)**
 
 1.  Go to **Workers & Pages** -> **Turnstile**.
 2.  Add a new site (Managed type).
 3.  Update the site key and secret key in your environment variables and secrets respectively as instructed above.
 
-**🎙️ Realtime Audio (Cloudflare RealtimeKit)**
+** Realtime Audio (Cloudflare RealtimeKit)**
 
 1.  Go to **My Profile** -> **API Tokens**.
 2.  Create a token with `Realtime: Admin` permissions.
@@ -175,7 +175,7 @@ The frontend is a Vite application. You can deploy it to **Cloudflare Pages** di
 
 ---
 
-## 🧪 Testing & Coverage
+##  Testing & Coverage
 
 We maintain a strict **"No-Any"** policy and high test coverage for business logic.
 
@@ -192,7 +192,7 @@ Current Status:
 
 ---
 
-## 🛡️ Cost Safety & Guard Rails
+## Cost Safety & Guard Rails
 
 To prevent runway costs during development or DDoS attacks, the project implements a **Global Governor**:
 
@@ -202,16 +202,6 @@ To prevent runway costs during development or DDoS attacks, the project implemen
 
 ---
 
-## 📜 Documentation
-
-Detailed High-Level Design (HLD) is available in the `docs/hld/` directory:
-
-- [03: System Architecture](docs/hld/03_system_architecture.md)
-- [04: Atomic Betting Engine](docs/hld/04_component_betting_engine.md)
-- [17: Cost Safety Strategy](docs/hld/17_cost_safety.md)
-
----
-
-## ⚖️ License
+## License
 
 Distributed under the ISC License. See `LICENSE` for more information.
